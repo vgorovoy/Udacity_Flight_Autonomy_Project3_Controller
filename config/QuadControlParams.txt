@@ -1,15 +1,16 @@
+
 ############################## SLR SIMPLECONFIG ############################
 # this is a comment. [X] is a namespace. [X:Y] initializes X from Y
 # Namespace and parameter names are not case-sensitive
 # X=Y sets X to Y. Y may be a string, float, or list of 3 floats
 ############################################################################
 
-[QuadControlParams] 
+[QuadControlParams]
 
 UseIdealEstimator=1
 
 # Physical properties
-Mass = 0.4
+Mass = 0.5
 L = 0.17
 Ixx = 0.0023
 Iyy = 0.0023
@@ -19,20 +20,20 @@ minMotorThrust = .1
 maxMotorThrust = 4.5
 
 # Position control gains
-kpPosXY = 1
-kpPosZ = 1
-KiPosZ = 20
+kpPosXY = 30 # increasing leads to faster moving but it can overshooot well
+kpPosZ = 30 # increasing leads to faster moving but it can overshooot well
+KiPosZ = 40 # can increase more up to 70 and it will still work, if we decrease to 5 it it won't be ables to fix the error in mass for the drone fast enough'
 
 # Velocity control gains
-kpVelXY = 4
-kpVelZ = 4
+kpVelXY = 10 # if we make it smaller (2) it will oscilate a lot but on the right track, if we increase it too much (40) it will go completely off path
+kpVelZ = 10 # if we make it smaller (2) it will oscilate a lot, if we we increase it it too high (100) it will have more problems following the trajectory
 
 # Angle control gains
-kpBank = 5
-kpYaw = 1
+kpBank = 15 # decreasing (5) will create more oscillations before you become parallel, increasing too much (100) will cause rotating across acess and lose control, decreasing to 10 will optimize settle time for normal quadrotors, but it will stop working for quadrotor with changed center of mass
+kpYaw = 2  # decreasing to 1 will not allow to change yaw to commanded position fast enough, increasing too much (10) will cause instability
 
 # Angle rate gains
-kpPQR = 23, 23, 5
+kpPQR = 60, 60, 5 # decreasing too much will cause instability (20,20,5), increasing too much will have troubles following the trajectory (200,200,20), 90, 90, 5 alsow works, but trajectory seems to be better with 60,60,5
 
 # limits
 maxAscentRate = 5
